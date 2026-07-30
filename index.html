@@ -99,6 +99,7 @@ nav.stuck { background: rgba(7,7,14,0.72); backdrop-filter: blur(28px) saturate(
 .hero-grid { position: fixed; inset: 0; z-index: -2; background-image: linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px); background-size: 64px 64px; -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 0%, transparent 75%); mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 0%, transparent 75%); }
 .hero-noise { position: fixed; inset: 0; z-index: -1; opacity: 0.022; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); background-size: 180px; }
 
+
 /* REVEAL ANIMATION */
 .rv { opacity: 0; transform: translateY(26px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); will-change: opacity, transform; }
 .rv.on { opacity: 1; transform: none; }
@@ -154,16 +155,10 @@ h1.hname:hover .line2 { -webkit-text-stroke-color: rgba(212,175,55,0.85); }
 .photo-overlay { position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; z-index: 5; }
 .po-name { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
 .po-role { font-family: var(--mono); font-size: 8px; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; margin-top: 4px; text-transform: uppercase; }
-.photo-badge { position: absolute; backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); background: rgba(10,10,24,0.82); border: 1px solid var(--border2); border-radius: 10px; padding: 0.9rem 1.15rem; animation: float 6s ease-in-out infinite; box-shadow: var(--shadow-md); transition: border-color 0.3s, box-shadow 0.3s; }
-.photo-badge:hover { border-color: var(--border3); box-shadow: var(--shadow-md), 0 0 24px -8px var(--acc-glow); }
+
 @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-.pb1 { bottom: -1.5rem; left: -2rem; animation-delay: 0s; }
-.pb2 { top: 2.5rem; right: -2rem; animation-delay: 2s; }
-.pb-tag { font-family: var(--mono); font-size: 8px; letter-spacing: 2px; color: var(--acc); text-transform: uppercase; margin-bottom: 3px; }
-.pb-val { font-family: var(--serif); font-size: 0.92rem; font-weight: 700; color: var(--white); }
-.pb-sub { font-family: var(--mono); font-size: 8px; color: var(--text2); margin-top: 2px; }
+
 .pb-live { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 9px; color: var(--green); }
-.pb-livd { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: ping 2s infinite; }
 
 /* TICKER */
 .ticker { overflow: hidden; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 13px 0; -webkit-mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent); mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent); }
@@ -455,9 +450,8 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.
   .building-inner { padding: 5rem 6vw; }
   .bld-status { grid-template-columns: repeat(2, 1fr); }
   .contact-inner { gap: 4rem; padding: 6rem 6vw; }
-  .photo-badge { padding: 0.7rem 0.9rem; }
-  .pb1 { left: -1rem; }
-  .pb2 { right: -1rem; }
+
+  
 }
 
 /* Tablet portrait — collapse hero to single column, keep photo */
@@ -467,7 +461,7 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.
   .nav-burger { display: flex; }
   #hero { grid-template-columns: 1fr; padding: 96px 6vw 56px; gap: 2.5rem; min-height: auto; }
   .hero-photo-col { max-width: 340px; margin: 0 auto; width: 100%; }
-  .photo-badge.pb1, .photo-badge.pb2 { display: none; }
+  
   .proj-grid { grid-template-columns: 1fr; }
   .pcard-span { grid-column: span 1; }
   .bld-pitch { grid-template-columns: 1fr; }
@@ -571,6 +565,207 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.
   .resume-card { grid-template-columns: 1fr; }
   .resume-download-col { flex-direction: row; align-items: center; justify-content: flex-start; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ATMOSPHERE + MOTION            (React Bits inspired — plain CSS/JS, no deps)
+
+   WHERE EVERY EFFECT LIVES
+   ─────────────────────────────────────────────────────────────────────────
+    1  Light rays ................. .rays-bg    HERO (fades out on scroll)
+    2  In-section light layer ...... .rb-glow inside every #signal #projects
+                                     #experience #domain #ai #building #resume
+                                     #contact footer   EVERY SECTION
+    3  Ambient drift ............... .hero-bg               (46s slow float)
+    4  Name reveal, line by line ... h1.hname .rb-line      HERO
+    5  Headings resolve from blur ... .sec-h, .contact-h    EVERY SECTION
+    6  Eyebrow dash draws in ....... .sec-eyebrow::before, .h-eyebrow::before
+    7  Divider light sweep ......... hr.divider::after      BETWEEN SECTIONS
+    8  Stagger cascade ............. .rv siblings           EVERY SECTION
+    9  Cursor spotlight ............ .pcard .signal-item .domain-cell
+                                     .exp-item .cert-card .bld-mod .resume-card
+   10  Gold hairline on hover ...... same cards as 9
+   11  Magnet buttons .............. .btn-primary .btn-ghost .nav-cta .btn-download
+   12  Portrait tilts in 3D ........ .photo-frame           HERO
+   13  Sheen across gold CTAs ...... .nav-cta::after, .btn-primary::after
+   14  Shine on the gold line ...... .h-vp .accent          HERO
+   15  Figures count up ............ .h-stat-n, .resume-stat-n   HERO + RESUME
+   16  Progress bars fill .......... .bld-bar-fill          BUILDING
+   17  Click sparks ................ #rbSpark               (mouse only)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Light rays: fixed to the viewport, so one light source lights the page ── */
+.rays-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -3;
+  pointer-events: none; opacity: 0; transition: opacity 0.8s var(--ease-out); }
+.rays-bg canvas { display: block; width: 100%; height: 100%; }
+@supports (height: 100svh) { .rays-bg { height: 100svh; } }
+
+/* ── 2. In-section light. Five of the six sections paint an OPAQUE gradient,
+       which sealed the hero light out. Making them translucent was measured at
+       ~0.01 luminance (invisible), so instead each section gets its own light
+       layer: z-index -1 inside an isolated stacking context puts it above the
+       section's background but below every bit of its content. The anchor
+       alternates a/b so the light zig-zags down the page instead of stamping. ── */
+.rb-lit { position: relative; isolation: isolate; }
+.rb-glow { position: absolute; inset: -8% -4%; z-index: -1; pointer-events: none; opacity: 0;
+  transition: opacity 1.6s var(--ease-out); animation: rb-glow-drift 38s ease-in-out infinite; }
+.rb-lit.on > .rb-glow { opacity: 1; }
+.rb-glow.a { background:
+  radial-gradient(ellipse 55% 45% at 78% 8%, rgba(212,175,55,0.10) 0%, transparent 62%),
+  radial-gradient(ellipse 42% 38% at 14% 92%, rgba(56,189,248,0.032) 0%, transparent 60%); }
+.rb-glow.b { background:
+  radial-gradient(ellipse 52% 44% at 18% 10%, rgba(212,175,55,0.095) 0%, transparent 62%),
+  radial-gradient(ellipse 40% 36% at 88% 88%, rgba(56,189,248,0.030) 0%, transparent 60%); }
+@keyframes rb-glow-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-2.5%, 1.8%, 0) scale(1.07); } }
+
+/* ── 3. Ambient drift, page-wide now that the sections are translucent ── */
+.hero-bg { animation: rb-drift 46s ease-in-out infinite; will-change: transform; }
+@keyframes rb-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(-2.5%, 1.5%, 0) scale(1.07); }
+  100% { transform: translate3d(0, 0, 0) scale(1); } }
+
+/* ── 4. Name reveal by line (keeps the tight tracking and the outline stroke
+       exactly as authored — splitting per character breaks both) ── */
+h1.hname .rb-line { display: block; opacity: 0; transform: translateY(0.16em); filter: blur(14px);
+  transition: opacity 0.95s var(--ease-out), transform 0.95s var(--ease-out),
+              filter 0.95s var(--ease-out), -webkit-text-stroke-color 0.4s; }
+h1.hname .rb-line.on { opacity: 1; transform: none; filter: none; }
+h1.hname .rb-line.l2 { transition-delay: 0.13s; }
+
+/* ── 5. Headings resolve out of blur ── */
+.rb-blur { filter: blur(11px); opacity: 0; transition: filter 1s var(--ease-out), opacity 1s var(--ease-out); }
+.rb-blur.on { filter: none; opacity: 1; }
+
+/* ── 6. The gold eyebrow dash draws itself in ── */
+.sec-eyebrow::before, .h-eyebrow::before { width: 0; transition: width 0.9s var(--ease-out) 0.15s; }
+.sec-eyebrow.on::before { width: 24px; }
+.h-eyebrow.on::before { width: 30px; }
+
+/* ── 7. A pulse of light travels each divider as it enters view ── */
+.divider { position: relative; }
+.divider::after { content: ""; position: absolute; left: 0; top: -1px; width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--acc), transparent); opacity: 0.6;
+  transform: scaleX(0); transform-origin: left; transition: transform 1.3s var(--ease-out); }
+.divider.on::after { transform: scaleX(1); }
+
+/* ── 9. Card glows follow the cursor (rewiring the page's existing glows) ── */
+.pcard::before { background: radial-gradient(circle 380px at var(--mx, 50%) var(--my, -20%), var(--acc2), transparent 60%); }
+.signal-item::after { background: radial-gradient(circle 300px at var(--mx, 0%) var(--my, 0%), var(--acc2), transparent 65%); }
+.domain-cell::before { background: radial-gradient(circle 240px at var(--mx, 50%) var(--my, 0%), var(--acc2), transparent 65%); }
+.exp-item, .cert-card, .bld-mod, .resume-card { position: relative; }
+.exp-item::after, .cert-card::after, .bld-mod::after, .resume-card::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  background: radial-gradient(circle 260px at var(--mx, 50%) var(--my, 50%), var(--acc2), transparent 65%); }
+.exp-item:hover::after, .cert-card:hover::after,
+.bld-mod:hover::after, .resume-card:hover::after { opacity: 1; }
+
+/* ── 10. Gold hairline on hover. These sit in 1px-gap grids, so they get an
+       inset edge rather than a lift, which would expose the grid seams. ── */
+.pcard, .signal-item, .domain-cell, .bld-mod {
+  transition: background 0.35s var(--ease), box-shadow 0.35s var(--ease), transform 0.35s var(--ease); }
+.pcard:hover, .signal-item:hover, .domain-cell:hover, .bld-mod:hover { box-shadow: inset 0 0 0 1px rgba(212,175,55,0.22); }
+.cert-card:hover { box-shadow: inset 0 0 0 1px rgba(212,175,55,0.22), var(--shadow-md); }
+
+/* ── 11. Magnet ── */
+.btn-primary.rb-magnet:hover, .btn-ghost.rb-magnet:hover, .btn-download.rb-magnet:hover {
+  transform: translate(var(--mgx, 0px), calc(var(--mgy, 0px) - 2px)); }
+.nav-cta.rb-magnet:hover { transform: translate(var(--mgx, 0px), calc(var(--mgy, 0px) - 1px)); }
+
+/* ── 12. Portrait tilt ── */
+.photo-frame.rb-tilt { transform: var(--tilt, none); transition: transform 0.35s var(--ease), box-shadow 0.5s var(--ease); }
+.photo-frame.rb-tilt:hover { transform: var(--tilt, translateY(-4px)); }
+
+/* ── 13. Sheen across the gold CTAs ── */
+.nav-cta, .btn-primary { position: relative; overflow: hidden; }
+.nav-cta::after, .btn-primary::after {
+  content: ""; position: absolute; top: 0; left: -60%; width: 45%; height: 100%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent);
+  will-change: transform; animation: rb-sheen 6s var(--ease-out) infinite; }
+@keyframes rb-sheen {
+  0%, 72%   { transform: translateX(0) skewX(-18deg); }
+  88%, 100% { transform: translateX(480%) skewX(-18deg); } }
+
+/* ── 14. Shine on the gold thesis line ── */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .rb-shine { background: linear-gradient(100deg, var(--acc) 34%, #fff4d0 50%, var(--acc) 66%); background-size: 240% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: rb-shine 6.5s linear infinite; }
+  @keyframes rb-shine { 0% { background-position: 180% 0; } 100% { background-position: -80% 0; } } }
+
+/* ── 16. Progress bars ── */
+.bld-bar-fill { transition: width 1.4s var(--ease-out); }
+
+/* ── 17. Click sparks ── */
+#rbSpark { position: fixed; inset: 0; z-index: 9998; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rb-line, .rb-blur { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  .sec-eyebrow::before { width: 24px; } .h-eyebrow::before { width: 30px; }
+  .divider::after { transform: scaleX(1); transition: none; }
+  .hero-bg, .rb-glow, .nav-cta::after, .btn-primary::after, .rb-shine { animation: none; }
+  .rb-shine { color: var(--acc); }
+  .bld-bar-fill { transition: none; }
+  .rb-glow { opacity: 1; transition: none; } }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE PASS
+   The layout breakpoints (1024 / 900 / 600 / 420) were already in good shape.
+   These fix what those don't cover: viewport-height units, pointer effects on
+   touch, animation cost on phone GPUs, and very narrow screens.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* 1 ── Viewport height.
+   On phones 100vh is the *address-bar-hidden* height, so a 100vh hero runs past
+   the visible area on load and a 100vh modal loses its bottom edge behind the
+   browser chrome. svh is the stable "always fits" unit.
+   Scoped to >600px because below that #hero is already min-height:auto, and an
+   unscoped rule here would come later in the cascade and undo that. */
+@media (min-width: 601px) {
+  @supports (height: 100svh) { #hero { min-height: 100svh; } }
+}
+@media (max-width: 600px) {
+  @supports (height: 100svh) { .modal-box { max-height: 100svh; height: 100svh; } }
+}
+/* the light layer fills the fixed viewport with no vh arithmetic at all */
+.rays-bg { inset: 0; width: auto; height: auto; }
+
+/* 2 ── Touch devices.
+   A finger has no "leave", so pointer-driven transforms stick after a tap:
+   the portrait stays tilted and buttons stay nudged off-centre. */
+@media (hover: none) {
+  .photo-frame.rb-tilt, .photo-frame.rb-tilt:hover { transform: none; }
+  .btn-primary.rb-magnet:hover, .btn-ghost.rb-magnet:hover,
+  .btn-download.rb-magnet:hover, .nav-cta.rb-magnet:hover { transform: none; }
+  .exp-item:hover::after, .cert-card:hover::after,
+  .bld-mod:hover::after, .resume-card:hover::after { opacity: 0; }
+  .pcard:hover, .signal-item:hover, .domain-cell:hover, .bld-mod:hover { box-shadow: none; }
+  .nav-cta::after, .btn-primary::after { animation: none; }
+}
+
+/* 3 ── Animation cost.
+   Nine section lights plus the ambient layer is ten continuously compositing
+   surfaces. Keep the light, drop the drift on small screens. */
+@media (max-width: 900px) {
+  .rb-glow, .hero-bg { animation: none; }
+}
+
+/* 4 ── Long unbroken strings (emails, handles, URLs, formulae) must wrap
+   rather than push the layout sideways. */
+.cl-link, .f-links a, .contact-links a, .pc-text, .m-kl, .pc-formula { overflow-wrap: break-word; }
+
+/* 5 ── Very narrow phones (≤360px: iPhone SE, Galaxy S-mini and similar). */
+@media (max-width: 360px) {
+  h1.hname { font-size: 2.95rem; }
+  .h-vp { font-size: 0.94rem; }
+  .h-stats { gap: 0.9rem 1.2rem; }
+  .section, .building-inner, .resume-inner, .contact-inner { padding-left: 4.5vw; padding-right: 4.5vw; }
+  .mbody { padding: 3.5rem 1.1rem 2rem; }
+  .pcard, .domain-cell, .signal-item { padding: 1.5rem 1.15rem; }
+}
+
 </style>
 </head>
 <body>
@@ -648,15 +843,6 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.
         <div class="po-name">Shiva Singh Parihar</div>
         <div class="po-role">Senior Product Specialist · Deloitte USI</div>
       </div>
-    </div>
-    <div class="photo-badge pb1">
-      <div class="pb-tag">Current</div>
-      <div class="pb-val">Digital Tagging PO</div>
-      <div class="pb-sub">Deloitte USI · EMA Live</div>
-    </div>
-    <div class="photo-badge pb2">
-      <div class="pb-live"><span class="pb-livd"></span>Available Now</div>
-      <div style="font-family:var(--mono);font-size:8px;color:var(--text2);margin-top:2px">Open to Senior PM Roles</div>
     </div>
   </div>
 </section>
@@ -1234,7 +1420,6 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.
 </div>
 </div>
 
-
 <div class="divider"></div>
 <div id="certifications">
 <div class="section">
@@ -1260,7 +1445,6 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.
   </div>
 </div>
 </div>
-
 
 <div class="divider"></div>
 <div id="resume">
@@ -1568,6 +1752,586 @@ document.addEventListener("keydown", function(e) {
     });
   }
 });
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     ATMOSPHERE + MOTION — React Bits inspired, plain JS, no dependencies.
+     The effect map lives in the <style> block above ("WHERE EVERY EFFECT
+     LIVES"). Switch anything off in the MOTION object below.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  var MOTION = {
+    rays: true,        // 1  gold light rays behind the hero
+    sectionLight: true,// 2  every section gets its own drifting gold light
+    nameReveal: true,  // 4  hero name fades up line by line
+    blurText: true,    // 5  section headings resolve out of blur
+    eyebrows: true,    // 6  gold eyebrow dashes draw in
+    dividers: true,    // 7  light sweeps along each divider
+    stagger: true,     // 8  sibling reveals cascade instead of landing together
+    spotlight: true,   // 9  card glows follow the cursor
+    magnet: true,      // 11 buttons lean toward the cursor
+    tilt: true,        // 12 hero portrait tilts
+    shine: true,       // 14 sheen across the gold thesis line
+    countUp: true,     // 15 figures count up
+    bars: true,        // 16 build-progress bars fill
+    spark: true        // 17 gold sparks on click (mouse only)
+  };
+
+  // Light rays. Hero values, and where they travel to as you scroll down.
+  var RAYS = {
+    color:      [0.831, 0.686, 0.216],   // --acc #d4af37
+    colorHot:   [1.000, 0.940, 0.800],
+    origin:     [0.74, 1.08],            // hero: just off the top-right corner
+    originEnd:  [0.56, 0.94],            // scrolled: rakes left and lower
+    dir:        [-0.30, -1.00],
+    spread:     0.50,
+    length:     1.15,
+    speed:      0.30,
+    intensity:  1.15,                    // hero
+    intensityEnd: 0.80,                  // scrolled — sections sit on top of it
+    opacityEnd: 0.00,   // sections below are opaque, so fade out rather than sit unseen
+    core:       0.40,
+    sharpness:  6.00,
+    distortion: 0.35,
+    grain:      0.50,
+    horizon:    0.30,
+    pulse:      0.12,
+    followMouse: true,
+    mouseInfluence: 0.55,
+    dprMax: 1.5,
+    mobile: { origin: [0.72, 1.05], spread: 0.62, intensity: 1.00, dprMax: 1.25 }
+  };
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // A touchscreen fires pointermove on tap but never pointerleave, which leaves
+  // magnet/tilt transforms stuck. Only run them where there's a real pointer.
+  var finePointer = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  function isMobile() { return window.matchMedia('(max-width: 900px)').matches; }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  /* ── shared scroll progress (0 in the hero, 1 once past it) ── */
+  var scrollP = 0, scrollSubs = [], scrollTicking = false;
+  function readScroll() {
+    scrollTicking = false;
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    scrollP = Math.max(0, Math.min(1, y / Math.max(1, window.innerHeight * 0.9)));
+    for (var i = 0; i < scrollSubs.length; i++) scrollSubs[i](scrollP);
+  }
+  window.addEventListener('scroll', function () {
+    if (!scrollTicking) { scrollTicking = true; requestAnimationFrame(readScroll); }
+  }, { passive: true });
+
+  /* ── shared reveal observer, with a safety net ── */
+  var revealTargets = [];
+  var revealObs = null;
+  // Constructed defensively: this runs at top level, so anything thrown here
+  // would take every effect below it down with it.
+  if (typeof window.IntersectionObserver === 'function') {
+    try {
+      revealObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          if (e.target.__rbReveal) e.target.__rbReveal();
+          revealObs.unobserve(e.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+    } catch (err) { revealObs = null; }
+  }
+
+  function onReveal(el, fn) {
+    var rec = { el: el, done: false };
+    rec.run = function () { if (rec.done) return; rec.done = true; fn(); };
+    revealTargets.push(rec);
+    if (!revealObs) { rec.run(); return; }
+    el.__rbReveal = rec.run;
+    revealObs.observe(el);
+  }
+
+  // Nothing that starts hidden is allowed to stay hidden while it sits in view.
+  function failsafe() {
+    var vh = window.innerHeight || 800;
+    function inView(el) {
+      var r = el.getBoundingClientRect();
+      return r.top < vh && r.bottom > 0;
+    }
+    document.querySelectorAll('.rb-blur:not(.on), .rb-line:not(.on), .sec-eyebrow:not(.on), .h-eyebrow:not(.on), .rb-lit:not(.on)')
+      .forEach(function (el) { if (inView(el)) el.classList.add('on'); });
+    revealTargets.forEach(function (rec) { if (!rec.done && inView(rec.el)) rec.run(); });
+  }
+
+  function reveal(el) { onReveal(el, function () { el.classList.add('on'); }); }
+
+  /* ─────────────── 1. Light rays ─────────────── */
+  function initRays() {
+    var container = document.createElement('div');
+    container.className = 'rays-bg';
+    container.setAttribute('aria-hidden', 'true');
+    document.body.insertBefore(container, document.body.firstChild);
+
+    var canvas = document.createElement('canvas');
+    var gl = null;
+    try {
+      gl = canvas.getContext('webgl', {
+        alpha: true, antialias: false, depth: false, stencil: false,
+        premultipliedAlpha: true, powerPreference: 'low-power'
+      }) || canvas.getContext('experimental-webgl');
+    } catch (err) { gl = null; }
+    if (!gl) { container.parentNode && container.parentNode.removeChild(container); return; }
+    container.appendChild(canvas);
+
+    var VERT = [
+      'attribute vec2 position;',
+      'void main(){ gl_Position = vec4(position, 0.0, 1.0); }'
+    ].join('\n');
+
+    var FRAG = [
+      '#ifdef GL_FRAGMENT_PRECISION_HIGH',
+      'precision highp float;',
+      '#else',
+      'precision mediump float;',
+      '#endif',
+      'uniform vec2  iResolution;',
+      'uniform float iTime;',
+      'uniform vec3  uColor;',
+      'uniform vec3  uColorHot;',
+      'uniform vec2  uOrigin;',
+      'uniform vec2  uDir;',
+      'uniform float uSpread;',
+      'uniform float uLength;',
+      'uniform float uSpeed;',
+      'uniform float uIntensity;',
+      'uniform float uCore;',
+      'uniform float uSharp;',
+      'uniform float uDistort;',
+      'uniform float uNoise;',
+      'uniform float uHorizon;',
+      'uniform float uPulse;',
+      'uniform vec2  uMouse;',
+      '',
+      'float hash21(vec2 p){ return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453); }',
+      '',
+      'float vnoise(vec2 p){',
+      '  vec2 i = floor(p), f = fract(p);',
+      '  f = f * f * (3.0 - 2.0 * f);',
+      '  float a = hash21(i), b = hash21(i + vec2(1.0, 0.0));',
+      '  float c = hash21(i + vec2(0.0, 1.0)), d = hash21(i + vec2(1.0, 1.0));',
+      '  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);',
+      '}',
+      '',
+      'float shafts(vec2 nd, float len01, float freq, float drift, float t, float phase){',
+      '  float ang = atan(nd.y, nd.x);',
+      '  ang += uDistort * (vnoise(vec2(ang * 6.0, t * 0.15 + phase)) - 0.5);',
+      '  float b = 0.5 + 0.5 * sin(ang * freq + t * drift + phase);',
+      '  b = pow(b, uSharp);',
+      '  return b * exp(-len01 / max(uLength, 0.01));',
+      '}',
+      '',
+      'void main(){',
+      '  vec2 uv = gl_FragCoord.xy;',
+      '  vec2 src = uOrigin * iResolution;',
+      '  float t = iTime * uSpeed;',
+      '',
+      '  vec2 dir = normalize(uDir + vec2(uMouse.x * 0.16, uMouse.y * 0.06));',
+      '',
+      '  vec2 d = uv - src;',
+      '  float len = length(d);',
+      '  vec2 nd = d / max(len, 1e-4);',
+      '  float len01 = len / iResolution.y;',
+      '',
+      '  float cone = pow(clamp(dot(nd, dir), 0.0, 1.0), 1.0 / max(uSpread, 0.01));',
+      '',
+      '  float i = 0.0;',
+      '  i += 0.50 * shafts(nd, len01, 26.0,  0.72, t, 0.0);',
+      '  i += 0.32 * shafts(nd, len01, 47.0, -0.55, t, 1.7);',
+      '  i += 0.22 * shafts(nd, len01, 83.0,  1.05, t, 3.4);',
+      '  i *= cone;',
+      '',
+      '  i += uCore * exp(-len01 * 5.5) * cone;',
+      '  i *= 1.0 + uPulse * sin(t * 0.9);',
+      '',
+      '  float yn = uv.y / iResolution.y;',
+      '  i += uHorizon * pow(1.0 - yn, 3.0) * (0.6 + 0.4 * vnoise(vec2(uv.x / iResolution.x * 3.0, t * 0.2)));',
+      '',
+      '  i *= uIntensity;',
+      '  float n = hash21(floor(uv) + floor(iTime * 24.0));',
+      '  i += (n - 0.5) * uNoise * 0.05;',
+      '  i = clamp(i, 0.0, 1.0);',
+      '',
+      '  vec3 col = mix(uColor, uColorHot, smoothstep(0.30, 0.90, i)) * i;',
+      '  gl_FragColor = vec4(col, i);',
+      '}'
+    ].join('\n');
+
+    function compile(type, src) {
+      var s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        if (window.console) console.warn('rays shader:', gl.getShaderInfoLog(s));
+        return null;
+      }
+      return s;
+    }
+    var vs = compile(gl.VERTEX_SHADER, VERT), fs = compile(gl.FRAGMENT_SHADER, FRAG);
+    if (!vs || !fs) { container.parentNode.removeChild(container); return; }
+
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { container.parentNode.removeChild(container); return; }
+    gl.useProgram(prog);
+
+    var vbo = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    var aPos = gl.getAttribLocation(prog, 'position');
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+    var U = {};
+    ['iResolution', 'iTime', 'uColor', 'uColorHot', 'uOrigin', 'uDir', 'uSpread', 'uLength',
+     'uSpeed', 'uIntensity', 'uCore', 'uSharp', 'uDistort', 'uNoise', 'uHorizon', 'uPulse', 'uMouse']
+      .forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+
+    var dpr = 1, baseOrigin = RAYS.origin, baseIntensity = RAYS.intensity, spread = RAYS.spread;
+    function applyStatic() {
+      var m = isMobile() ? RAYS.mobile : {};
+      baseOrigin = m.origin || RAYS.origin;
+      baseIntensity = m.intensity || RAYS.intensity;
+      spread = m.spread || RAYS.spread;
+      dpr = Math.min(m.dprMax || RAYS.dprMax, window.devicePixelRatio || 1);
+      var dx = RAYS.dir[0], dy = RAYS.dir[1], dl = Math.sqrt(dx * dx + dy * dy) || 1;
+      gl.uniform3f(U.uColor, RAYS.color[0], RAYS.color[1], RAYS.color[2]);
+      gl.uniform3f(U.uColorHot, RAYS.colorHot[0], RAYS.colorHot[1], RAYS.colorHot[2]);
+      gl.uniform2f(U.uDir, dx / dl, dy / dl);
+      gl.uniform1f(U.uSpread, spread);
+      gl.uniform1f(U.uLength, RAYS.length);
+      gl.uniform1f(U.uSpeed, reduced ? 0 : RAYS.speed);
+      gl.uniform1f(U.uCore, RAYS.core);
+      gl.uniform1f(U.uSharp, RAYS.sharpness);
+      gl.uniform1f(U.uDistort, RAYS.distortion);
+      gl.uniform1f(U.uNoise, RAYS.grain);
+      gl.uniform1f(U.uHorizon, RAYS.horizon);
+      gl.uniform1f(U.uPulse, reduced ? 0 : RAYS.pulse);
+    }
+
+    function resize() {
+      var w = container.clientWidth || window.innerWidth;
+      var h = container.clientHeight || window.innerHeight;
+      applyStatic();
+      var pw = Math.max(1, Math.round(w * dpr)), ph = Math.max(1, Math.round(h * dpr));
+      if (canvas.width !== pw || canvas.height !== ph) { canvas.width = pw; canvas.height = ph; }
+      gl.viewport(0, 0, pw, ph);
+      gl.uniform2f(U.iResolution, pw, ph);
+      if (!raf) frame(performance.now());
+    }
+
+    var mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+    if (RAYS.followMouse && !reduced) {
+      window.addEventListener('pointermove', function (e) {
+        mouse.tx = (e.clientX / Math.max(1, window.innerWidth) * 2 - 1) * RAYS.mouseInfluence;
+        mouse.ty = (e.clientY / Math.max(1, window.innerHeight) * 2 - 1) * RAYS.mouseInfluence;
+      }, { passive: true });
+    }
+
+    // As you scroll, the same light source rakes across and eases off, so the
+    // page reads as one lit space rather than a lit hero and a dark remainder.
+    function applyScroll(p) {
+      var o = lerp(1, RAYS.opacityEnd, p);
+      container.style.opacity = o.toFixed(3);
+      if (o < 0.02) stop(); else start();     // no GPU spend once it is invisible
+    }
+    scrollSubs.push(applyScroll);
+
+    var raf = 0, t0 = performance.now();
+    function frame(now) {
+      raf = 0;
+      var t = (now - t0) * 0.001;
+      mouse.x += (mouse.tx - mouse.x) * 0.05;
+      mouse.y += (mouse.ty - mouse.y) * 0.05;
+      gl.uniform2f(U.uOrigin,
+        lerp(baseOrigin[0], RAYS.originEnd[0], scrollP),
+        lerp(baseOrigin[1], RAYS.originEnd[1], scrollP));
+      gl.uniform1f(U.uIntensity, lerp(baseIntensity, RAYS.intensityEnd, scrollP));
+      gl.uniform1f(U.iTime, t);
+      gl.uniform2f(U.uMouse, mouse.x, mouse.y);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      if (!reduced && !document.hidden) raf = requestAnimationFrame(frame);
+    }
+    function start() { if (!raf && !reduced) raf = requestAnimationFrame(frame); }
+    function stop() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+
+    canvas.addEventListener('webglcontextlost', function (e) { e.preventDefault(); stop(); });
+    if (typeof window.ResizeObserver === 'function') {
+      try { new ResizeObserver(resize).observe(container); }
+      catch (err) { window.addEventListener('resize', resize); }
+    } else window.addEventListener('resize', resize);
+    resize();
+    applyScroll(scrollP);
+    requestAnimationFrame(function () { applyScroll(scrollP); });
+    start();
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop(); else { t0 = performance.now() - 1000; start(); }
+    });
+  }
+
+  /* ─────────────── 2. In-section light ─────────────── */
+  function initSectionLight() {
+    // querySelectorAll returns document order, which is what the a/b alternation
+    // needs — #building actually sits above #signal on the page.
+    var hosts = Array.prototype.slice.call(document.querySelectorAll(
+      '#signal, #projects, #experience, #domain, #ai, #building, #resume, #contact, footer'));
+
+    hosts.forEach(function (host, i) {
+      host.classList.add('rb-lit');
+      var glow = document.createElement('div');
+      glow.className = 'rb-glow ' + (i % 2 ? 'b' : 'a');
+      glow.setAttribute('aria-hidden', 'true');
+      // offset the drift so the sections don't all breathe in unison
+      glow.style.animationDelay = '-' + (i * 4.5).toFixed(1) + 's';
+      host.insertBefore(glow, host.firstChild);
+      reveal(host);
+    });
+  }
+
+  /* ─────────────── 4. Name reveal, line by line ─────────────── */
+  function initNameReveal() {
+    var h1 = document.querySelector('h1.hname');
+    if (!h1) return;
+    // Wrap the bare first line; the second line is already its own element.
+    var kids = Array.prototype.slice.call(h1.childNodes);
+    kids.forEach(function (node) {
+      if (node.nodeType === 3 && node.nodeValue.trim()) {
+        var s = document.createElement('span');
+        s.className = 'rb-line';
+        s.textContent = node.nodeValue;
+        h1.replaceChild(s, node);
+      } else if (node.nodeType === 1) {
+        node.classList.add('rb-line', 'l2');
+      }
+    });
+    var lines = h1.querySelectorAll('.rb-line');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        for (var i = 0; i < lines.length; i++) lines[i].classList.add('on');
+      });
+    });
+  }
+
+  /* ─────────────── 5. Headings ─────────────── */
+  function initBlurText() {
+    document.querySelectorAll('.sec-h, .contact-h').forEach(function (el) {
+      el.classList.add('rb-blur');
+      reveal(el);
+    });
+  }
+
+  /* ─────────────── 6 + 7. Eyebrow dashes and dividers ─────────────── */
+  function initEyebrows() { document.querySelectorAll('.sec-eyebrow, .h-eyebrow').forEach(reveal); }
+  function initDividers() { document.querySelectorAll('.divider').forEach(reveal); }
+
+  /* ─────────────── 8. Stagger cascade ─────────────── */
+  function initStagger() {
+    var counts = [], parents = [];
+    document.querySelectorAll('.rv').forEach(function (el) {
+      if (/\bd[1-4]\b/.test(el.className)) return;      // respect authored delays
+      var p = el.parentElement;
+      if (!p) return;
+      var i = parents.indexOf(p);
+      if (i === -1) { parents.push(p); counts.push(0); i = parents.length - 1; }
+      var n = counts[i]++;
+      if (n === 0) return;
+      el.style.transitionDelay = Math.min(n * 70, 420) + 'ms';
+    });
+  }
+
+  /* ─────────────── 9. Cursor spotlight ─────────────── */
+  function initSpotlight() {
+    var SEL = '.pcard, .signal-item, .domain-cell, .exp-item, .cert-card, .bld-mod, .resume-card';
+    var pending = null, ticking = false;
+    function flush() {
+      ticking = false;
+      if (!pending) return;
+      var el = pending.el, r = el.getBoundingClientRect();
+      if (r.width && r.height) {
+        el.style.setProperty('--mx', ((pending.x - r.left) / r.width * 100).toFixed(1) + '%');
+        el.style.setProperty('--my', ((pending.y - r.top) / r.height * 100).toFixed(1) + '%');
+      }
+      pending = null;
+    }
+    document.addEventListener('pointermove', function (e) {
+      if (!e.target || !e.target.closest) return;
+      var el = e.target.closest(SEL);
+      if (!el) return;
+      pending = { el: el, x: e.clientX, y: e.clientY };
+      if (!ticking) { ticking = true; requestAnimationFrame(flush); }
+    }, { passive: true });
+  }
+
+  /* ─────────────── 11. Magnet ─────────────── */
+  function initMagnet() {
+    document.querySelectorAll('.btn-primary, .btn-ghost, .nav-cta, .btn-download').forEach(function (b) {
+      b.classList.add('rb-magnet');
+      b.addEventListener('pointermove', function (e) {
+        var r = b.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2 || 1);
+        var dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2 || 1);
+        b.style.setProperty('--mgx', (Math.max(-1, Math.min(1, dx)) * 5).toFixed(2) + 'px');
+        b.style.setProperty('--mgy', (Math.max(-1, Math.min(1, dy)) * 3.5).toFixed(2) + 'px');
+      }, { passive: true });
+      b.addEventListener('pointerleave', function () {
+        b.style.setProperty('--mgx', '0px');
+        b.style.setProperty('--mgy', '0px');
+      });
+    });
+  }
+
+  /* ─────────────── 12. Portrait tilt ─────────────── */
+  function initTilt() {
+    var frame = document.querySelector('.photo-frame');
+    if (!frame) return;
+    frame.classList.add('rb-tilt');
+    var host = frame.parentElement || frame;
+    host.addEventListener('pointermove', function (e) {
+      var r = frame.getBoundingClientRect();
+      var nx = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width / 2 || 1)));
+      var ny = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height / 2 || 1)));
+      frame.style.setProperty('--tilt',
+        'perspective(1000px) rotateY(' + (nx * 6).toFixed(2) + 'deg) rotateX(' +
+        (-ny * 6).toFixed(2) + 'deg) translateY(-4px)');
+    }, { passive: true });
+    host.addEventListener('pointerleave', function () { frame.style.removeProperty('--tilt'); });
+  }
+
+  /* ─────────────── 14. Shine ─────────────── */
+  function initShine() {
+    document.querySelectorAll('.h-vp .accent').forEach(function (el) { el.classList.add('rb-shine'); });
+  }
+
+  /* ─────────────── 15. CountUp ─────────────── */
+  function initCountUp() {
+    document.querySelectorAll('.h-stat-n, .resume-stat-n').forEach(function (el) {
+      var node = null;
+      for (var i = 0; i < el.childNodes.length; i++) {
+        if (el.childNodes[i].nodeType === 3 && /\d/.test(el.childNodes[i].nodeValue)) {
+          node = el.childNodes[i]; break;
+        }
+      }
+      if (!node) return;
+      var original = node.nodeValue;
+      var m = original.match(/^(\D*)(\d[\d,]*)(.*)$/);
+      if (!m) return;
+      var pre = m[1], target = parseInt(m[2].replace(/,/g, ''), 10), post = m[3];
+      var grouped = m[2].indexOf(',') !== -1;
+      if (!isFinite(target)) return;
+      function fmt(v) { return pre + (grouped ? v.toLocaleString('en-US') : String(v)) + post; }
+      node.nodeValue = fmt(0);
+      onReveal(el, function () {
+        var dur = 1500, start = performance.now();
+        (function step(now) {
+          var p = Math.min(1, (now - start) / dur);
+          node.nodeValue = fmt(Math.round(target * (1 - Math.pow(2, -10 * p))));
+          if (p < 1) requestAnimationFrame(step);
+          else node.nodeValue = original;
+        })(start);
+      });
+    });
+  }
+
+  /* ─────────────── 16. Progress bars ─────────────── */
+  function initBars() {
+    document.querySelectorAll('.bld-bar-fill').forEach(function (bar) {
+      var target = bar.style.width;
+      if (!target) return;
+      bar.style.width = '0%';
+      onReveal(bar, function () {
+        requestAnimationFrame(function () { bar.style.width = target; });
+      });
+    });
+  }
+
+  /* ─────────────── 17. Click sparks ─────────────── */
+  function initSpark() {
+    var canvas = document.createElement('canvas');
+    canvas.id = 'rbSpark';
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    if (!ctx) { canvas.parentNode.removeChild(canvas); return; }
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    function size() {
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    size();
+    window.addEventListener('resize', size);
+
+    var sparks = [], raf = 0;
+    function tick(now) {
+      raf = 0;
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      var alive = false;
+      ctx.lineCap = 'round';
+      for (var i = 0; i < sparks.length; i++) {
+        var s = sparks[i], p = (now - s.t) / s.life;
+        if (p >= 1) continue;
+        alive = true;
+        var r1 = s.r0 + (1 - Math.pow(1 - p, 3)) * s.len;
+        ctx.strokeStyle = 'rgba(232,194,90,' + (0.9 * (1 - p)).toFixed(3) + ')';
+        ctx.lineWidth = 1.6 * (1 - p) + 0.4;
+        ctx.beginPath();
+        ctx.moveTo(s.x + Math.cos(s.a) * r1, s.y + Math.sin(s.a) * r1);
+        ctx.lineTo(s.x + Math.cos(s.a) * (r1 + 9 * (1 - p)), s.y + Math.sin(s.a) * (r1 + 9 * (1 - p)));
+        ctx.stroke();
+      }
+      if (alive) raf = requestAnimationFrame(tick);
+      else sparks.length = 0;
+    }
+    document.addEventListener('pointerdown', function (e) {
+      if (e.pointerType && e.pointerType !== 'mouse') return;
+      var now = performance.now(), n = 10;
+      for (var i = 0; i < n; i++) {
+        sparks.push({ x: e.clientX, y: e.clientY, a: (i / n) * Math.PI * 2 + Math.random() * 0.35,
+                      r0: 4, len: 16 + Math.random() * 12, t: now, life: 420 + Math.random() * 180 });
+      }
+      if (!raf) raf = requestAnimationFrame(tick);
+    }, { passive: true });
+  }
+
+  /* ─────────────── boot ─────────────── */
+  function boot() {
+    try { if (MOTION.rays) initRays(); } catch (e) {}
+    try { if (MOTION.sectionLight) initSectionLight(); } catch (e) {}
+    try { if (MOTION.nameReveal && !reduced) initNameReveal(); } catch (e) {}
+    try { if (MOTION.blurText && !reduced) initBlurText(); } catch (e) {}
+    try { if (MOTION.eyebrows) initEyebrows(); } catch (e) {}
+    try { if (MOTION.dividers) initDividers(); } catch (e) {}
+    try { if (MOTION.stagger && !reduced) initStagger(); } catch (e) {}
+    try { if (MOTION.spotlight && finePointer) initSpotlight(); } catch (e) {}
+    try { if (MOTION.magnet && !reduced && finePointer) initMagnet(); } catch (e) {}
+    try { if (MOTION.tilt && !reduced && finePointer) initTilt(); } catch (e) {}
+    try { if (MOTION.shine) initShine(); } catch (e) {}
+    try { if (MOTION.countUp && !reduced) initCountUp(); } catch (e) {}
+    try { if (MOTION.bars && !reduced) initBars(); } catch (e) {}
+    try { if (MOTION.spark && !reduced) initSpark(); } catch (e) {}
+    readScroll();
+    setTimeout(failsafe, 4000);
+    window.addEventListener('load', function () { setTimeout(failsafe, 1200); });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+
+})();
 </script>
 </body>
 </html>
