@@ -403,7 +403,7 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.
 .bld-phase.future .bld-phase-q, .bld-phase.future .bld-phase-t { color: var(--text3); }
 
 /* Architecture + Screenshots placeholders */
-.bld-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; }
+.bld-showcase { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
 .bld-panel { background: var(--card); border: 1px solid var(--border2); border-radius: 16px; overflow: hidden; position: relative; transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s var(--ease); }
 .bld-panel:hover { border-color: var(--border3); box-shadow: var(--shadow-md); transform: translateY(-3px); }
 .bld-panel-head { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); }
@@ -470,6 +470,8 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.
   .bld-road-line { grid-template-columns: repeat(2, 1fr); gap: 2rem 1.5rem; }
   .bld-road-line::before { display: none; }
   .bld-showcase { grid-template-columns: 1fr; }
+  .pm-flow-h { flex-direction: column; align-items: stretch; }
+  .pm-flow-h .pm-arrow { transform: none; }
   .scar-body { grid-template-columns: 1fr; gap: 1.5rem; }
   .exp-item { grid-template-columns: 1fr; gap: 0.6rem; padding: 2rem 0; }
   .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
@@ -766,6 +768,128 @@ h1.hname .rb-line.l2 { transition-delay: 0.13s; }
   .pcard, .domain-cell, .signal-item { padding: 1.5rem 1.15rem; }
 }
 
+/* ─── PMOS CASE STUDY MODAL ───────────────────────────────────────────────
+   Scoped entirely to #modal-pmos, so no existing modal changes. Reuses the
+   existing tokens (--acc, --mono, --serif, --border) and the m-* type scale;
+   these classes only add the layouts this case study needs — a flow diagram,
+   screenshot figures, a verified/hypothesis split, and a roadmap.          */
+#modal-pmos .modal-box { max-width: 940px; }
+
+.pm-product-header { margin-bottom: 1.4rem; }
+.pm-ph-name { font-family: var(--serif); font-size: clamp(2rem, 5vw, 2.6rem); font-weight: 800; color: var(--white); letter-spacing: -1.5px; line-height: 1; margin-bottom: 0.55rem; }
+.pm-ph-sub { font-family: var(--mono); font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--acc); margin-bottom: 0.7rem; }
+.pm-ph-tag { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: var(--white); letter-spacing: -0.3px; line-height: 1.35; }
+.pm-capability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.pm-capability { border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.2rem; background: var(--card); }
+.pm-capability-k { font-family: var(--mono); font-size: 8px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--acc); margin-bottom: 0.5rem; }
+.pm-capability-v { font-size: 0.83rem; color: var(--text); line-height: 1.6; font-weight: 300; }
+.pm-trust-label { display: inline-block; font-family: var(--mono); font-size: 8px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--text2); border: 1px solid var(--border2); border-radius: 100px; padding: 3px 10px; margin-bottom: 0.65rem; }
+.pm-status { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.6rem; }
+.pm-chip { font-family: var(--mono); font-size: 8px; letter-spacing: 1.6px; text-transform: uppercase; padding: 5px 11px; border-radius: 100px; border: 1px solid var(--border2); color: var(--text2); }
+.pm-chip.on { color: var(--acc); border-color: rgba(212,175,55,0.28); background: var(--acc3); }
+
+.pm-legend { display: grid; gap: 0.7rem; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.pm-leg { border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1rem; background: var(--card); }
+.pm-leg-k { font-family: var(--mono); font-size: 8px; letter-spacing: 1.8px; text-transform: uppercase; margin-bottom: 0.35rem; }
+.pm-leg.v .pm-leg-k { color: var(--green); }
+.pm-leg.h .pm-leg-k { color: var(--teal); }
+.pm-leg-d { font-size: 0.8rem; color: var(--text); line-height: 1.6; font-weight: 300; }
+
+.pm-quote { border-left: 2px solid rgba(212,175,55,0.55); padding: 0.2rem 0 0.2rem 1.15rem; margin: 1.15rem 0 0; font-family: var(--serif); font-size: 1.02rem; font-weight: 700; color: var(--white); line-height: 1.45; letter-spacing: -0.3px; }
+
+.pm-list { list-style: none; margin: 0.7rem 0 0; padding: 0; display: grid; gap: 0.5rem; }
+.pm-list li { position: relative; padding-left: 1.1rem; font-size: 0.86rem; color: var(--text); line-height: 1.7; font-weight: 300; }
+.pm-list li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 5px; height: 5px; border-radius: 50%; background: rgba(212,175,55,0.6); }
+.pm-list li strong { color: var(--white); font-weight: 500; }
+
+.pm-defs { display: grid; gap: 0.55rem; margin-top: 0.7rem; }
+.pm-def { display: grid; grid-template-columns: 132px 1fr; gap: 0.9rem; align-items: start; }
+.pm-def dt { font-family: var(--mono); font-size: 8px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--acc); padding-top: 0.35em; }
+.pm-def dd { margin: 0; font-size: 0.86rem; color: var(--text); line-height: 1.7; font-weight: 300; }
+.pm-def dd strong { color: var(--white); font-weight: 500; }
+
+/* Architecture flow */
+.pm-flow { margin-top: 1rem; border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; background: var(--card); }
+.pm-node { border: 1px solid var(--border2); border-radius: 9px; padding: 0.7rem 0.9rem; background: var(--bg2); }
+.pm-node-k { font-family: var(--mono); font-size: 8px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--acc); margin-bottom: 0.25rem; }
+.pm-node-v { font-size: 0.83rem; color: var(--white); font-weight: 500; line-height: 1.45; }
+.pm-node-s { font-size: 0.76rem; color: var(--text2); line-height: 1.5; margin-top: 0.2rem; }
+.pm-node-q { border-color: rgba(212,175,55,0.3); background: var(--acc3); }
+.pm-arrow { text-align: center; color: rgba(212,175,55,0.5); font-size: 13px; line-height: 1; margin: 0.42rem 0; }
+.pm-branch { display: grid; gap: 0.7rem; grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr)); margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px dashed var(--border2); }
+.pm-br { border: 1px solid var(--border); border-radius: 9px; padding: 0.7rem 0.9rem; background: var(--bg2); }
+.pm-br-k { font-family: var(--mono); font-size: 8px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--text2); margin-bottom: 0.28rem; }
+.pm-br-v { font-size: 0.82rem; color: var(--white); font-weight: 500; }
+.pm-br.pos { border-color: rgba(45,212,160,0.25); }
+.pm-br.pos .pm-br-k { color: var(--green); }
+.pm-br.safe { border-color: rgba(56,189,248,0.22); }
+.pm-br.safe .pm-br-k { color: var(--teal); }
+
+/* Horizontal flow — homepage architecture + compact decision visual */
+.pm-flow-h { display: flex; align-items: center; gap: 0.85rem; }
+.pm-flow-h .pm-node { flex: 1 1 0; min-width: 0; text-align: center; }
+.pm-flow-h .pm-arrow { flex: 0 0 auto; transform: rotate(-90deg); margin: 0; }
+.pm-flow-compact .pm-node { padding: 0.6rem 0.7rem; }
+.pm-flow-compact .pm-node-k { margin-bottom: 0; }
+
+/* Screenshots */
+.pm-shots { display: grid; gap: 1.75rem; margin-top: 1rem; }
+.pm-shots-pair { display: grid; gap: 1.4rem; grid-template-columns: 1fr 1fr; }
+.pm-group-t { font-size: 0.95rem; color: var(--white); font-weight: 500; letter-spacing: -0.2px; margin-bottom: 0.3rem; }
+.pm-group-s { font-size: 0.82rem; color: var(--text); line-height: 1.6; font-weight: 300; }
+.pm-fig { margin: 0; border: 1px solid var(--border2); border-radius: 12px; overflow: hidden; background: var(--bg); }
+.pm-frame { display: block; width: 100%; overflow: hidden; background: #07070e; position: relative; }
+.pm-frame img { display: block; width: 100%; height: auto; object-fit: contain; }
+.pm-frame::after { content: "Open full size"; position: absolute; right: 8px; bottom: 8px; font-family: var(--mono); font-size: 7.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text2); background: rgba(7,7,14,0.86); border: 1px solid var(--border2); border-radius: 5px; padding: 4px 8px; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
+.pm-frame:hover::after { opacity: 1; }
+.pm-cap { padding: 0.85rem 1rem 1rem; border-top: 1px solid var(--border); }
+.pm-cap-t { font-size: 0.85rem; color: var(--white); font-weight: 500; line-height: 1.45; margin-bottom: 0.28rem; }
+.pm-cap-d { font-size: 0.79rem; color: var(--text); line-height: 1.65; font-weight: 300; }
+
+/* Decisions */
+.pm-dec { border: 1px solid var(--border); border-left: 2px solid rgba(212,175,55,0.45); border-radius: 0 10px 10px 0; padding: 1rem 1.15rem; background: var(--card); margin-top: 0.7rem; }
+.pm-dec-n { font-family: var(--mono); font-size: 8px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--acc); margin-bottom: 0.3rem; }
+.pm-dec-t { font-size: 0.92rem; color: var(--white); font-weight: 500; margin-bottom: 0.35rem; letter-spacing: -0.2px; }
+.pm-dec-w { font-size: 0.83rem; color: var(--text); line-height: 1.7; font-weight: 300; }
+
+/* Validation split */
+.pm-split { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); margin-top: 1rem; }
+.pm-col { border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1.25rem; background: var(--card); }
+.pm-col-h { font-family: var(--mono); font-size: 8px; letter-spacing: 1.8px; text-transform: uppercase; margin-bottom: 0.9rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--border); }
+.pm-col.v .pm-col-h { color: var(--green); }
+.pm-col.h .pm-col-h { color: var(--teal); }
+.pm-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.42rem; }
+.pm-col li { font-size: 0.83rem; color: var(--text); line-height: 1.6; font-weight: 300; padding-left: 1rem; position: relative; }
+.pm-col.v li::before { content: "\2713"; position: absolute; left: 0; color: var(--green); font-size: 9px; top: 0.35em; }
+.pm-col.h li::before { content: "\25CB"; position: absolute; left: 0; color: var(--teal); font-size: 8px; top: 0.42em; }
+
+/* Pricing illustration */
+.pm-calc { border: 1px dashed var(--border2); border-radius: 10px; padding: 1rem 1.15rem; margin-top: 0.9rem; background: var(--bg2); }
+.pm-calc-r { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3rem 1rem; font-family: var(--mono); font-size: 0.78rem; color: var(--text); padding: 0.28rem 0; }
+.pm-calc-r.tot { border-top: 1px solid var(--border); margin-top: 0.4rem; padding-top: 0.6rem; color: var(--white); }
+.pm-calc-note { font-family: var(--mono); font-size: 8px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--teal); margin-top: 0.75rem; }
+
+/* Roadmap */
+.pm-road { display: grid; gap: 0.7rem; margin-top: 0.9rem; }
+.pm-lane { display: grid; grid-template-columns: 54px 1fr; gap: 1rem; align-items: start; border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem 1.05rem; background: var(--card); }
+.pm-p { font-family: var(--mono); font-size: 9px; letter-spacing: 1.4px; color: var(--acc); border: 1px solid rgba(212,175,55,0.25); border-radius: 6px; padding: 4px 0; text-align: center; }
+.pm-lane-t { font-size: 0.88rem; color: var(--white); font-weight: 500; margin-bottom: 0.3rem; }
+.pm-lane-d { font-size: 0.81rem; color: var(--text); line-height: 1.65; font-weight: 300; }
+
+/* Close */
+.pm-close { border: 1px solid rgba(212,175,55,0.22); background: var(--acc3); border-radius: 12px; padding: 1.4rem 1.5rem; margin-top: 0.5rem; }
+.pm-close p { font-size: 0.9rem; color: var(--white); line-height: 1.7; font-weight: 300; margin: 0 0 0.9rem; }
+.pm-close-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+@media (max-width: 700px) {
+  #modal-pmos .modal-box { max-width: 100%; }
+  .pm-def { grid-template-columns: 1fr; gap: 0.2rem; }
+  .pm-lane { grid-template-columns: 46px 1fr; gap: 0.8rem; }
+  .pm-capability-grid { grid-template-columns: 1fr; }
+  .pm-shots-pair { grid-template-columns: 1fr; }
+  .pm-calc-r { font-size: 0.72rem; }
+}
+
 </style>
 </head>
 <body>
@@ -852,46 +976,46 @@ h1.hname .rb-line.l2 { transition-delay: 0.13s; }
 
   <div class="bld-banner rv">
     <span class="bld-live"><span class="bld-live-dot"></span>Currently Building</span>
-    <span class="bld-version">PMOS · v1.0 — Private Alpha</span>
+    <span class="bld-version">PMOS · Working MVP — Demo Environment</span>
   </div>
 
   <div class="bld-head">
     <div class="bld-wordmark rv">
       <span class="bld-logo">PM<span>OS</span></span>
-      <span class="bld-pill">The Product Operating System</span>
+      <span class="bld-pill">Permission-Aware AI Knowledge Assistant</span>
     </div>
-    <h2 class="bld-tagline rv d1">The decision layer for product organizations — it reads everything your product org knows and answers, <em>with citations</em>, what you know, what you decided, and why.</h2>
-    <p class="bld-lede rv d2">After 10 years shipping enterprise products across regulatory SaaS, healthcare AI, and audit platforms, I watched the same failure repeat: the org already knew the answer, but it couldn't retrieve it, connect it, or remember deciding it. <strong>PMOS is the system I wish I'd had.</strong> v1.0 — the Product Brain — ingests tickets, docs, calls and threads, answers questions about them with grounded citations, and tells you honestly what it cannot answer.</p>
+    <h2 class="bld-tagline rv d1">A working AI knowledge assistant that answers <em>with evidence</em> — and only from what the person asking is actually allowed to see.</h2>
+    <p class="bld-lede rv d2">After 10 years shipping products in regulated environments — where access control was never optional — I kept seeing the same failure in AI knowledge tools: they answer confidently regardless of who's asking or what that person is permitted to know. <strong>PMOS is a working vertical slice built to fix that.</strong> It retrieves an organization's knowledge, filters it by tenant and role before generation, cites its sources, and says "I don't know" when the evidence can't support a safe answer — verified today against a synthetic demo corpus, not yet a validated commercial product.</p>
   </div>
 
   <div class="bld-pitch">
     <div class="bld-cell rv">
       <div class="bld-cell-label"><span class="bld-ico">◎</span>Vision</div>
-      <div class="bld-cell-h">To product decisions what the general ledger is to finance.</div>
-      <p class="bld-cell-p">A shared, continuously-updated, auditable source of truth that everyone reads from — where the record is the product and the reports are derived views. <strong>PMOS answers "what do we know, what did we decide, why, and did it work?"</strong> from your org's own tickets, docs, calls and threads — every answer grounded in a cited source, never a confident guess.</p>
+      <div class="bld-cell-h">Enterprise knowledge, with evidence you can trust.</div>
+      <p class="bld-cell-p">A working MVP that retrieves an organization's own knowledge, filters it by what the requesting user is actually permitted to see, and answers with a cited, inspectable source — never a confident guess. <strong>This is a product hypothesis about trust in AI answers</strong>, verified today against a synthetic demo corpus — not yet a validated commercial product.</p>
     </div>
     <div class="bld-cell rv d1">
       <div class="bld-cell-label"><span class="bld-ico">⚠</span>Problem</div>
-      <div class="bld-cell-h">Product orgs have a memory problem that presents as ten different problems.</div>
-      <p class="bld-cell-p">The volume of signal a product org receives grew ~10× in a decade while headcount stayed flat — the gap absorbed by the only elastic resource, the PM's attention, which has run out. Feedback tools record what customers said; trackers record who's doing what. <strong>Nothing records why the org decided, on what evidence, and whether the prediction held.</strong> That's where institutional memory dies — and adding another document generator only makes the graveyard bigger.</p>
+      <div class="bld-cell-h">An AI answer is only useful if the person asking is actually allowed to have it.</div>
+      <p class="bld-cell-p">Most enterprise knowledge assistants are built to answer confidently regardless of who's asking. In real organizations, most valuable knowledge is permissioned — by tenant, by role, by policy. <strong>My working hypothesis:</strong> knowledge-work teams need answers that are provably scoped to what the asker is authorized to see — and honest when they aren't, instead of hallucinating past the gap.</p>
     </div>
     <div class="bld-cell bld-cell-span rv d2">
       <div class="bld-cell-label"><span class="bld-ico">✦</span>Why it matters</div>
       <div class="bld-why-grid">
         <div class="bld-why-item">
           <div class="bld-why-n">01</div>
-          <div class="bld-why-t">Decisions become assets</div>
-          <div class="bld-why-d">Every bet, trade-off, and reversal is captured with its reasoning intact — so the "why" survives re-orgs, hand-offs, and time.</div>
+          <div class="bld-why-t">Trust requires proof</div>
+          <div class="bld-why-d">Every answer is grounded in a cited, inspectable source — never a confident string with nothing behind it.</div>
         </div>
         <div class="bld-why-item">
           <div class="bld-why-n">02</div>
-          <div class="bld-why-t">Strategy stays connected</div>
-          <div class="bld-why-d">Roadmap items link upward to the thesis and downward to live metrics, so drift between intent and execution is visible immediately.</div>
+          <div class="bld-why-t">Access is not optional</div>
+          <div class="bld-why-d">The same question returns a different — correct — answer depending on who's asking, and returns nothing when no permitted evidence exists.</div>
         </div>
         <div class="bld-why-item">
           <div class="bld-why-n">03</div>
           <div class="bld-why-t">Built by a practitioner</div>
-          <div class="bld-why-d">Not a generic note-taking app with a PM template — an opinionated workflow shaped by a decade of shipping real enterprise products.</div>
+          <div class="bld-why-d">Not a wrapper around a chat API — a tenant-aware ingestion pipeline, ACL-filtered retrieval, and a grounded-answer path built end to end.</div>
         </div>
       </div>
     </div>
@@ -900,16 +1024,16 @@ h1.hname .rb-line.l2 { transition-delay: 0.13s; }
   <div class="bld-block-label rv">Current Development Status</div>
   <div class="bld-status rv">
     <div class="bld-stat">
-      <div class="bld-stat-v">v1.0</div>
-      <div class="bld-stat-l">Private Alpha</div>
+      <div class="bld-stat-v">MVP</div>
+      <div class="bld-stat-l">Working Vertical Slice</div>
     </div>
     <div class="bld-stat">
-      <div class="bld-stat-v">12</div>
-      <div class="bld-stat-l">Platform Modules</div>
+      <div class="bld-stat-v">2</div>
+      <div class="bld-stat-l">Demo Tenants</div>
     </div>
     <div class="bld-stat">
-      <div class="bld-stat-v">9</div>
-      <div class="bld-stat-l">Surfaces</div>
+      <div class="bld-stat-v">15</div>
+      <div class="bld-stat-l">Synthetic Docs</div>
     </div>
     <div class="bld-stat">
       <div class="bld-stat-v">RAG</div>
@@ -920,74 +1044,74 @@ h1.hname .rb-line.l2 { transition-delay: 0.13s; }
   <div class="bld-modules rv d1">
     <div class="bld-mod">
       <div class="bld-mod-l">
-        <span class="bld-mod-name">Ingestion + Injection Screening</span>
-        <span class="bld-mod-desc">— hostile-content screening before anything is indexed</span>
+        <span class="bld-mod-name">Tenant-Aware Ingestion + Deduplication</span>
+        <span class="bld-mod-desc">— PostgreSQL-backed ledger; idempotent re-ingestion; ACL-only changes skip re-embedding</span>
       </div>
       <div class="bld-mod-r"><div class="bld-bar"><div class="bld-bar-fill" style="width:100%"></div></div><span class="bld-chip live">Live</span></div>
     </div>
     <div class="bld-mod">
       <div class="bld-mod-l">
-        <span class="bld-mod-name">Hybrid Retrieval + ACL Trimming</span>
-        <span class="bld-mod-desc">— dense + sparse, per-tenant reranking, permission-aware</span>
+        <span class="bld-mod-name">ACL-Aware Retrieval · Qdrant</span>
+        <span class="bld-mod-desc">— tenant-scoped, permission-filtered vector retrieval before generation</span>
       </div>
       <div class="bld-mod-r"><div class="bld-bar"><div class="bld-bar-fill" style="width:100%"></div></div><span class="bld-chip live">Live</span></div>
     </div>
     <div class="bld-mod">
       <div class="bld-mod-l">
-        <span class="bld-mod-name">Grounded Generation · Claim[] Protocol</span>
-        <span class="bld-mod-desc">— every sentence cited; a bare string cannot render</span>
+        <span class="bld-mod-name">Grounded Answer Generation</span>
+        <span class="bld-mod-desc">— every answer cites its source; nothing renders ungrounded</span>
       </div>
       <div class="bld-mod-r"><div class="bld-bar"><div class="bld-bar-fill" style="width:100%"></div></div><span class="bld-chip live">Live</span></div>
     </div>
     <div class="bld-mod">
       <div class="bld-mod-l">
-        <span class="bld-mod-name">Ask + Knowledge-Gap Detection</span>
-        <span class="bld-mod-desc">— cited answers, explicit abstention, and "what it can't answer"</span>
+        <span class="bld-mod-name">Deliberate Abstention + Fail-Closed Identity</span>
+        <span class="bld-mod-desc">— no permitted evidence → explicit non-answer; missing tenant → HTTP 401</span>
       </div>
       <div class="bld-mod-r"><div class="bld-bar"><div class="bld-bar-fill" style="width:100%"></div></div><span class="bld-chip live">Live</span></div>
     </div>
     <div class="bld-mod">
       <div class="bld-mod-l">
-        <span class="bld-mod-name">Eval Harness · Release Gating</span>
-        <span class="bld-mod-desc">— abstention &gt;95%, grounding &gt;85%; a regression blocks the build</span>
+        <span class="bld-mod-name">Evidence Panel — Inspectable Sources</span>
+        <span class="bld-mod-desc">— source title, excerpt, and identifiers shown for every citation</span>
       </div>
-      <div class="bld-mod-r"><div class="bld-bar"><div class="bld-bar-fill" style="width:80%"></div></div><span class="bld-chip prog">In Progress</span></div>
+      <div class="bld-mod-r"><div class="bld-bar"><div class="bld-bar-fill" style="width:100%"></div></div><span class="bld-chip live">Live</span></div>
     </div>
     <div class="bld-mod">
       <div class="bld-mod-l">
-        <span class="bld-mod-name">Trust Ladder · Earned Agent Autonomy</span>
-        <span class="bld-mod-desc">— observe → draft → act-with-approval, granted on measured accuracy</span>
+        <span class="bld-mod-name">Production Connector + Identity Sync</span>
+        <span class="bld-mod-desc">— real knowledge-base integration and enterprise identity provider sync</span>
       </div>
-      <div class="bld-mod-r"><div class="bld-bar"><div class="bld-bar-fill" style="width:20%"></div></div><span class="bld-chip plan">Roadmap · v2.0</span></div>
+      <div class="bld-mod-r"><div class="bld-bar"><div class="bld-bar-fill" style="width:15%"></div></div><span class="bld-chip next">Planned</span></div>
     </div>
   </div>
 
-  <div class="bld-block-label rv">Roadmap</div>
+  <div class="bld-block-label rv">Build Story</div>
   <div class="bld-roadmap rv d1">
     <div class="bld-road-line">
       <div class="bld-phase done">
         <div class="bld-phase-dot"></div>
-        <div class="bld-phase-q">Q1 '26 — Shipped</div>
+        <div class="bld-phase-q">Stage 1 — Done</div>
         <div class="bld-phase-t">Foundation</div>
-        <div class="bld-phase-d">Strategy Canvas, Decision Log, and Roadmap Engine — the core loop, working end to end.</div>
+        <div class="bld-phase-d">Tenant-aware ingestion, document representation, and the ACL model — the substrate everything else sits on.</div>
+      </div>
+      <div class="bld-phase done">
+        <div class="bld-phase-dot"></div>
+        <div class="bld-phase-q">Stage 2 — Done</div>
+        <div class="bld-phase-t">Retrieval + Trust</div>
+        <div class="bld-phase-d">Persistent deduplication, ACL-only lifecycle updates, and permission-aware retrieval enforced before generation, not after.</div>
       </div>
       <div class="bld-phase active">
         <div class="bld-phase-dot"></div>
-        <div class="bld-phase-q">Q2 '26 — Now</div>
-        <div class="bld-phase-t">Live Signal</div>
-        <div class="bld-phase-d">Wiring real metrics into the loop so roadmap bets read their own outcomes automatically.</div>
+        <div class="bld-phase-q">Stage 3 — Now</div>
+        <div class="bld-phase-t">Working Vertical Slice</div>
+        <div class="bld-phase-d">End-to-end path shipped: identity → permission-aware retrieval → grounded answer → citations → evidence — verified against a synthetic demo corpus.</div>
       </div>
       <div class="bld-phase future">
         <div class="bld-phase-dot"></div>
-        <div class="bld-phase-q">Q3 '26 — Beta</div>
-        <div class="bld-phase-t">AI Co-Pilot</div>
-        <div class="bld-phase-d">PRD Composer and decision summarisation; open private beta to a first cohort of PMs.</div>
-      </div>
-      <div class="bld-phase future">
-        <div class="bld-phase-dot"></div>
-        <div class="bld-phase-q">Q4 '26 — Scale</div>
-        <div class="bld-phase-t">Team Mode</div>
-        <div class="bld-phase-d">Stakeholder Map, multiplayer workspaces, and integrations with the tools teams already run on.</div>
+        <div class="bld-phase-q">Stage 4 — Next</div>
+        <div class="bld-phase-t">Validation</div>
+        <div class="bld-phase-d">A real connector, production identity sync, and structured customer validation — turning a working MVP into a tested product hypothesis.</div>
       </div>
     </div>
   </div>
@@ -997,51 +1121,73 @@ h1.hname .rb-line.l2 { transition-delay: 0.13s; }
     <div class="bld-panel">
       <div class="bld-panel-head">
         <span class="bld-panel-title">System Architecture</span>
-        <span class="bld-panel-tag">Placeholder</span>
+        <span class="bld-panel-tag">Verified Vertical Slice</span>
       </div>
       <div class="bld-arch">
-        <div class="bld-arch-row">
-          <span class="bld-node">Strategy Canvas</span>
-          <span class="bld-node">Decision Log</span>
-          <span class="bld-node">Roadmap Engine</span>
+        <div class="pm-flow pm-flow-h">
+          <div class="pm-node">
+            <div class="pm-node-k">User</div>
+            <div class="pm-node-v">Tenant + Role</div>
+          </div>
+          <div class="pm-arrow">→</div>
+          <div class="pm-node">
+            <div class="pm-node-k">Identity</div>
+            <div class="pm-node-v">Access Check</div>
+          </div>
+          <div class="pm-arrow">→</div>
+          <div class="pm-node">
+            <div class="pm-node-k">Retrieval</div>
+            <div class="pm-node-v">Permission-Aware · ACL-Filtered</div>
+          </div>
+          <div class="pm-arrow">→</div>
+          <div class="pm-node pm-node-q">
+            <div class="pm-node-k">Decision</div>
+            <div class="pm-node-v">Evidence Available?</div>
+          </div>
         </div>
-        <div class="bld-arch-conn">↓</div>
-        <div class="bld-arch-row">
-          <span class="bld-node core">PMOS Core · Unified Product Graph</span>
+        <div class="pm-branch">
+          <div class="pm-br pos">
+            <div class="pm-br-k">Yes</div>
+            <div class="pm-br-v">Grounded Answer → Citations → Evidence Panel</div>
+          </div>
+          <div class="pm-br safe">
+            <div class="pm-br-k">No</div>
+            <div class="pm-br-v">Deliberate Abstention — Not Grounded</div>
+          </div>
         </div>
-        <div class="bld-arch-conn">↓</div>
-        <div class="bld-arch-row">
-          <span class="bld-node">Signal / Metrics Layer</span>
-          <span class="bld-node">AI Co-Pilot</span>
+        <div class="pm-branch">
+          <div class="pm-br safe">
+            <div class="pm-br-k">Missing Tenant / Identity</div>
+            <div class="pm-br-v">→ HTTP 401 → Fail Closed</div>
+          </div>
         </div>
-        <div class="bld-arch-conn">↓</div>
-        <div class="bld-arch-row">
-          <span class="bld-node">Integrations API</span>
-        </div>
+        <div class="bld-mod-desc" style="text-align:center;margin-top:1rem;">Verified vertical slice — a detailed architecture walkthrough is in the full case study.</div>
       </div>
     </div>
     <div class="bld-panel">
       <div class="bld-panel-head">
-        <span class="bld-panel-title">Product Screenshots</span>
-        <span class="bld-panel-tag">Coming Soon</span>
+        <span class="bld-panel-title">How PMOS Decides Whether To Answer</span>
+        <span class="bld-panel-tag">Product Logic</span>
       </div>
-      <div class="bld-shots">
-        <div class="bld-shot">
-          <div class="bld-shot-ico">▢</div>
-          <div class="bld-shot-skel">
-            <div class="bld-skel-line m"></div>
-            <div class="bld-skel-line"></div>
-            <div class="bld-skel-line s"></div>
+      <div class="bld-arch">
+        <div class="pm-flow pm-flow-h pm-flow-compact">
+          <div class="pm-node"><div class="pm-node-k">Question</div></div>
+          <div class="pm-arrow">→</div>
+          <div class="pm-node"><div class="pm-node-k">Identity</div></div>
+          <div class="pm-arrow">→</div>
+          <div class="pm-node"><div class="pm-node-k">Permission-Aware Retrieval</div></div>
+          <div class="pm-arrow">→</div>
+          <div class="pm-node pm-node-q"><div class="pm-node-k">Permitted Evidence?</div></div>
+        </div>
+        <div class="pm-branch">
+          <div class="pm-br pos">
+            <div class="pm-br-k">Yes</div>
+            <div class="pm-br-v">Grounded Answer → Citations → Inspectable Source</div>
           </div>
-          <div class="bld-shot-l">Strategy Canvas</div>
-        </div>
-        <div class="bld-shot">
-          <div class="bld-shot-ico">▤</div>
-          <div class="bld-shot-l">Decision Log</div>
-        </div>
-        <div class="bld-shot">
-          <div class="bld-shot-ico">◫</div>
-          <div class="bld-shot-l">Signal Board</div>
+          <div class="pm-br safe">
+            <div class="pm-br-k">No</div>
+            <div class="pm-br-v">Abstain</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1049,10 +1195,10 @@ h1.hname .rb-line.l2 { transition-delay: 0.13s; }
 
   <div class="bld-cta rv d1">
     <div>
-      <div class="bld-cta-t">Want early access to PMOS?</div>
-      <div class="bld-cta-s">Private beta opening Q3 2026 — practitioners and design partners welcome.</div>
+      <div class="bld-cta-t">Read the full PMOS case study →</div>
+      <div class="bld-cta-s">Working MVP · synthetic demo corpus · technical behaviour verified · customer validation next.</div>
     </div>
-    <a href="mailto:shiva.riparihar@gmail.com?subject=PMOS%20Early%20Access" class="btn-primary">Request Access</a>
+    <a href="#" onclick="openModal('pmos');return false;" class="btn-primary">Read the Case Study →</a>
   </div>
 
 </div>
@@ -1400,42 +1546,42 @@ h1.hname .rb-line.l2 { transition-delay: 0.13s; }
 <div class="section">
   <div class="sec-eyebrow rv">AI Product Capabilities</div>
   <h2 class="sec-h rv">Applying AI to <em>Product</em></h2>
-  <p class="sec-sub rv">Not abstract claims — every capability below is applied in <strong>PMOS</strong>, the AI-native platform I'm currently architecting. The question is never "can we build it?" but "should we, for whom, and how do we measure it?"</p>
+  <p class="sec-sub rv">Not abstract claims — each capability below is grounded in <strong>PMOS</strong>, a working AI knowledge-assistant MVP verified against a synthetic demo corpus, and marked honestly where something is still ahead rather than built. The question is never "can we build it?" but "should we, for whom, and how do we measure it?"</p>
   <div class="domain-grid">
     <div class="domain-cell rv">
       <span class="domain-ico">💬</span>
       <div class="domain-nm">LLM Applications</div>
-      <div class="domain-desc">Scope where a language model genuinely beats a deterministic feature — and where it doesn't. I frame LLM use cases around a clear job-to-be-done, define quality bars and guardrails before a line is written, and design the human-in-the-loop checkpoints that make output trustworthy enough to ship. <em>In PMOS: an LLM answers questions over an org's entire product corpus, gated by an eval harness before any answer ships.</em></div>
+      <div class="domain-desc">Scope where a language model genuinely beats a deterministic feature — and where it doesn't. I frame LLM use cases around a clear job-to-be-done, define quality bars and guardrails before a line is written, and design the human-in-the-loop checkpoints that make output trustworthy enough to ship. <em>In PMOS: an LLM answers questions over an organization's knowledge base, but only using evidence the requesting user is permitted to access — grounded generation, not open-ended chat.</em></div>
       <div class="domain-tools"><span class="dtool">Use-Case Scoping</span><span class="dtool">Quality Bars</span><span class="dtool">Human-in-the-Loop</span></div>
     </div>
     <div class="domain-cell rv d1">
       <span class="domain-ico">🔗</span>
       <div class="domain-nm">Agentic Workflows</div>
-      <div class="domain-desc">Decompose multi-step work into agent tasks with the right level of autonomy. I focus on where to keep a human in control, how to recover gracefully when a step fails, and how to prove an autonomous flow saves real time without quietly introducing new risk. <em>In PMOS: a Trust Ladder (observe → draft → act-with-approval → autonomous) grants authority only on measured accuracy, with automatic demotion on a quality breach.</em></div>
-      <div class="domain-tools"><span class="dtool">Task Decomposition</span><span class="dtool">Trust Ladder</span><span class="dtool">Earned Autonomy</span></div>
+      <div class="domain-desc">Decompose multi-step work into agent tasks with the right level of autonomy. I focus on where to keep a human in control, how to recover gracefully when a step fails, and how to prove an autonomous flow saves real time without quietly introducing new risk. <em>Not yet built in PMOS — the current MVP is a single-turn grounded Q&amp;A assistant, not a multi-step agent. Agentic task decomposition is a deliberate later direction, once retrieval and evaluation are solid.</em></div>
+      <div class="domain-tools"><span class="dtool">Task Decomposition</span><span class="dtool">Human-in-the-Loop</span><span class="dtool">Failure Recovery</span></div>
     </div>
     <div class="domain-cell rv d2">
       <span class="domain-ico">📚</span>
       <div class="domain-nm">RAG Systems</div>
-      <div class="domain-desc">Treat retrieval as a product problem, not just a pipeline. I prioritise which knowledge sources actually matter to users, set expectations for freshness and citation, and define how the product behaves when the answer simply isn't in the corpus — so confidence never outruns coverage. <em>In PMOS: hybrid dense + sparse retrieval with ACL-trimmed candidates and per-tenant reranking, feeding a Claim[] protocol where every generated sentence is cited or it doesn't render.</em></div>
+      <div class="domain-desc">Treat retrieval as a product problem, not just a pipeline. I prioritise which knowledge sources actually matter to users, set expectations for freshness and citation, and define how the product behaves when the answer simply isn't in the corpus — so confidence never outruns coverage. <em>In PMOS: Qdrant-backed vector retrieval filtered by tenant and ACL before generation, with every answer citing its source and abstaining when the permitted evidence can't support a safe answer.</em></div>
       <div class="domain-tools"><span class="dtool">Hybrid Retrieval</span><span class="dtool">Grounding & Provenance</span><span class="dtool">Coverage Gaps</span></div>
     </div>
     <div class="domain-cell rv">
       <span class="domain-ico">🎯</span>
       <div class="domain-nm">AI Evaluation & Trust/Safety</div>
-      <div class="domain-desc">Make AI quality measurable and ungameable. I turn fuzzy quality bars into testable eval sets, gate releases on them, and treat prompt-injection defence as a hard requirement, not a nice-to-have. <em>In PMOS: an eval harness blocks any build that regresses on abstention (&gt;95%), grounding (&gt;85%) or citation precision (&gt;90%), and injection screening runs before indexing with a zero tool-call-success red-team target.</em></div>
+      <div class="domain-desc">Make AI quality measurable and ungameable. I turn fuzzy quality bars into testable eval sets, gate releases on them, and treat prompt-injection defence as a hard requirement, not a nice-to-have. <em>In PMOS: abstention and citation-grounding are treated as core product requirements, verified today through direct testing of permission and evidence scenarios — Viewer vs. Admin, missing tenant, no-evidence questions. A quantified eval harness is the planned next step, not yet built.</em></div>
       <div class="domain-tools"><span class="dtool">Eval Harness</span><span class="dtool">Abstention & Confidence</span><span class="dtool">Injection Defence</span></div>
     </div>
     <div class="domain-cell rv d1">
       <span class="domain-ico">🧭</span>
       <div class="domain-nm">AI Product Strategy</div>
-      <div class="domain-desc">Decide where AI earns its place on the roadmap and where it's a distraction. I tie AI investment to business outcomes, build the buy-vs-build case, and define success metrics and adoption goals so leadership funds the bet for the right reasons — and knows when to stop. <em>In PMOS: I deferred LLM generation out of v1.0 despite buyer demand — sequencing retrieval quality and eval instrumentation first — to avoid the AI-slop failure mode that forfeits enterprise trust.</em></div>
+      <div class="domain-desc">Decide where AI earns its place on the roadmap and where it's a distraction. I tie AI investment to business outcomes, build the buy-vs-build case, and define success metrics and adoption goals so leadership funds the bet for the right reasons — and knows when to stop. <em>In PMOS: I prioritised a working grounded-answer path — permission-aware retrieval, citations, and abstention — over breadth of AI features, because demonstrating a trustworthy answer mattered more than demonstrating a long feature list.</em></div>
       <div class="domain-tools"><span class="dtool">Roadmap Sequencing</span><span class="dtool">Buy vs Build</span><span class="dtool">Outcome Metrics</span></div>
     </div>
     <div class="domain-cell rv d2">
       <span class="domain-ico">✨</span>
       <div class="domain-nm">AI UX Design</div>
-      <div class="domain-desc">Design for the reality that AI is probabilistic. I shape how the product communicates confidence, handles being wrong, and keeps the user in control — so people trust the experience and stay engaged even when a response misses. Trust is the feature; the model is the means. <em>In PMOS: sentence-level provenance underlines, an explicit "I don't know" when the corpus can't answer, and honest degradation that names what failed instead of fabricating.</em></div>
+      <div class="domain-desc">Design for the reality that AI is probabilistic. I shape how the product communicates confidence, handles being wrong, and keeps the user in control — so people trust the experience and stay engaged even when a response misses. Trust is the feature; the model is the means. <em>In PMOS: a citation marker on every grounded claim opens an evidence panel with the source and excerpt; when no permitted evidence exists, the product says so explicitly instead of guessing.</em></div>
       <div class="domain-tools"><span class="dtool">Provenance UX</span><span class="dtool">Honest Abstention</span><span class="dtool">Graceful Degradation</span></div>
     </div>
   </div>
@@ -1721,6 +1867,338 @@ h1.hname .rb-line.l2 { transition-delay: 0.13s; }
       <div class="m-sl">Outcome</div>
       <p class="m-sp">COOL engine shipped and adopted by CareMore care coordination teams. Systematic member outreach replaced ad-hoc processes across the 4-year engagement. Auditable logic allowed compliance teams to validate outreach decisions.</p>
     </div>
+  </div></div>
+</div>
+
+<div id="modal-pmos" class="modal-back" onclick="if(event.target===this)closeModal('pmos')">
+  <div class="modal-box"><button class="modal-close" onclick="closeModal('pmos')">✕</button>
+  <div class="mbody">
+    <div class="m-ey">Case Study · Self-Directed Build · 2026 · Solo PM + Engineering</div>
+
+    <div class="pm-product-header">
+      <div class="pm-ph-name">PMOS</div>
+      <div class="pm-ph-sub">Permission-Aware AI Knowledge Assistant</div>
+      <div class="pm-ph-tag">Enterprise knowledge, with evidence you can trust.</div>
+    </div>
+
+    <div class="pm-status">
+      <span class="pm-chip on">Working MVP</span>
+      <span class="pm-chip on">Technically Verified</span>
+      <span class="pm-chip">Synthetic Demo Corpus</span>
+    </div>
+
+    <div class="pm-capability-grid">
+      <div class="pm-capability">
+        <div class="pm-capability-k">Permission-Aware</div>
+        <div class="pm-capability-v">Tenant and role boundaries are part of retrieval.</div>
+      </div>
+      <div class="pm-capability">
+        <div class="pm-capability-k">Evidence-First</div>
+        <div class="pm-capability-v">Grounded answers expose inspectable source evidence.</div>
+      </div>
+      <div class="pm-capability">
+        <div class="pm-capability-k">Fail-Closed</div>
+        <div class="pm-capability-v">When permitted evidence is unavailable, PMOS abstains.</div>
+      </div>
+    </div>
+
+    <div class="pm-legend">
+      <div class="pm-leg v">
+        <div class="pm-leg-k">Verified</div>
+        <div class="pm-leg-d">Behaviour demonstrated in the current vertical slice, through live browser and API testing.</div>
+      </div>
+      <div class="pm-leg h">
+        <div class="pm-leg-k">Hypothesis</div>
+        <div class="pm-leg-d">Customer, market, pricing and commercial assumptions that still require validation.</div>
+      </div>
+    </div>
+
+    <div class="m-section">
+      <div class="m-sl">The Problem</div>
+      <p class="m-sp">Enterprise knowledge is scattered across support tickets, runbooks and internal documentation. Retrieval alone doesn't solve it, because an assistant answering inside an organisation has to resolve four questions at once, not one:</p>
+      <ul class="pm-list">
+        <li>Is this information <strong>relevant</strong> to what was asked?</li>
+        <li>Is this information <strong>accessible</strong> to this particular user?</li>
+        <li>Can the answer be <strong>traced back to evidence</strong> the user can open?</li>
+        <li>What should happen when the evidence <strong>isn't available</strong> at all?</li>
+      </ul>
+      <p class="pm-quote">An enterprise AI assistant should not only know an answer. It should know whether the user is allowed to see the evidence behind it.</p>
+      <p class="m-sp" style="margin-top:1.15rem;">I have not validated this as a market problem. It is the problem I chose to build against, drawn from ten years of shipping in regulated environments where access control was never optional.</p>
+    </div>
+
+    <div class="m-section">
+      <div class="m-sl">Product Hypothesis — Not Validated</div>
+      <dl class="pm-defs">
+        <div class="pm-def"><dt>ICP</dt><dd>B2B SaaS companies with meaningful support operations and knowledge spread across tickets, runbooks and internal documentation.</dd></div>
+        <div class="pm-def"><dt>Primary user</dt><dd>Tier-1 and Tier-2 support agents.</dd></div>
+        <div class="pm-def"><dt>Buyer</dt><dd>Head or VP of Customer Support, or Support Operations.</dd></div>
+        <div class="pm-def"><dt>JTBD</dt><dd>&ldquo;When a customer asks something I haven't seen before, help me answer correctly in one pass without escalating — and show me where the answer came from.&rdquo;</dd></div>
+        <div class="pm-def"><dt>Value prop</dt><dd>Resolve support questions faster using the company's own knowledge, while respecting permissions and showing evidence.</dd></div>
+        <div class="pm-def"><dt>Pricing</dt><dd>A per-agent SaaS subscription, plausibly <strong>$40–60 per agent/month</strong> with an initial seat floor. This is a starting point for pricing conversations, not a tested price — it requires customer discovery and willingness-to-pay validation before it means anything.</dd></div>
+      </dl>
+    </div>
+
+    <div class="m-section">
+      <div class="m-sl">Product Thinking — The MVP Decision</div>
+      <p class="m-sp">Rather than building a broad enterprise AI platform, I scoped one narrow vertical slice and made it work end to end: <strong>ingest → permission-aware retrieval → grounded answer → evidence</strong>.</p>
+      <p class="m-sp" style="margin-top:0.9rem;">The reasoning was about where the risk actually sat. Generating fluent text is close to a solved problem and would have proved nothing. The hard part — the part that decides whether an enterprise can deploy this at all — is generating a <strong>useful answer without crossing the user's knowledge boundary</strong>. So that is what I built first, and what the demo is designed to interrogate.</p>
+      <ul class="pm-list">
+        <li><strong>Permission before generation</strong> — authorization is part of retrieval, not a filter applied afterwards.</li>
+        <li><strong>Evidence before confidence</strong> — a claim the user cannot trace is not an answer.</li>
+        <li><strong>Abstain rather than invent</strong> — a safe failure mode is a feature, not an error state.</li>
+        <li><strong>Tenant isolation by construction</strong> — not by convention or by careful querying.</li>
+        <li><strong>Permission changes shouldn't force re-embedding</strong> — authorization state and content identity are separate concerns.</li>
+        <li><strong>A demonstrable slice beats feature breadth</strong> — one honest end-to-end path is worth more than a list of disconnected AI features.</li>
+      </ul>
+    </div>
+
+    <div class="m-section">
+      <div class="m-sl">System Design &amp; Trust Boundary</div>
+      <div class="pm-flow">
+        <div class="pm-node">
+          <div class="pm-node-k">User</div>
+          <div class="pm-node-v">Viewer or Admin, within a tenant</div>
+        </div>
+        <div class="pm-arrow">↓</div>
+        <div class="pm-node">
+          <div class="pm-node-k">Identity</div>
+          <div class="pm-node-v">Tenant + role resolved into canonical principals</div>
+        </div>
+        <div class="pm-arrow">↓</div>
+        <div class="pm-node">
+          <div class="pm-node-k">Permission-Aware Retrieval</div>
+          <div class="pm-node-v">Tenant-scoped, ACL-filtered vector search (Qdrant)</div>
+          <div class="pm-node-s">Authorization is applied during retrieval, and re-checked as candidates cross into context assembly.</div>
+        </div>
+        <div class="pm-arrow">↓</div>
+        <div class="pm-node">
+          <div class="pm-node-k">Grounded Answer</div>
+          <div class="pm-node-v">Composed only from evidence this identity is permitted to read</div>
+        </div>
+        <div class="pm-arrow">↓</div>
+        <div class="pm-node">
+          <div class="pm-node-k">Citations</div>
+          <div class="pm-node-v">Source title, excerpt and identifiers on every claim</div>
+        </div>
+        <div class="pm-arrow">↓</div>
+        <div class="pm-node">
+          <div class="pm-node-k">Evidence Panel</div>
+          <div class="pm-node-v">Inspectable in the interface, alongside the answer</div>
+        </div>
+
+        <div class="pm-branch">
+          <div class="pm-br">
+            <div class="pm-br-k">Missing tenant identity</div>
+            <div class="pm-br-v">→ HTTP 401, never an anonymous read</div>
+          </div>
+          <div class="pm-br">
+            <div class="pm-br-k">No permitted evidence</div>
+            <div class="pm-br-v">→ deliberate abstention, not a guess</div>
+          </div>
+        </div>
+      </div>
+      <p class="m-sp" style="margin-top:1.1rem;">Permission handling is part of retrieval, not an afterthought added to the UI. The current implementation reinforces ACL enforcement across the retrieval and context boundaries rather than trusting a single checkpoint — so a failure in one layer does not become a disclosure.</p>
+    </div>
+
+    <div class="m-section">
+      <div class="m-sl">What I Built</div>
+      <p class="pm-quote">One workflow. Three trust boundaries.</p>
+      <p class="m-sp" style="margin-top:0.9rem;">The clearest way to show what PMOS does is to ask it one question twice, changing nothing but who is asking.</p>
+      <div class="pm-shots">
+        <div>
+          <div class="bld-block-label">01 — Authorization Boundary</div>
+          <div class="pm-group-t">Same question. Different authorization boundary.</div>
+          <div class="pm-group-s">The Viewer cannot access the restricted evidence. The Admin can. The question does not change.</div>
+          <div class="pm-shots-pair" style="margin-top:0.9rem;">
+            <figure class="pm-fig">
+              <a class="pm-frame" href="assets/pmos/screenshots/pmos-viewer-abstention.jpg" target="_blank" rel="noopener" title="Open full-size screenshot"><img src="assets/pmos/screenshots/pmos-viewer-abstention.jpg" alt="PMOS as an ACME Viewer: the credit-authority question returns Not grounded, with no accessible sources." loading="lazy" decoding="async"></a>
+              <figcaption class="pm-cap">
+                <span class="pm-trust-label">ACME · Viewer</span>
+                <div class="pm-cap-t">Same question, different authorization boundary.</div>
+                <div class="pm-cap-d">A Viewer in the ACME tenant asks about credit authority. The runbook that answers it is restricted, so the system reports <strong>Not grounded — no accessible sources</strong> rather than reaching for a weaker document.</div>
+              </figcaption>
+            </figure>
+            <figure class="pm-fig">
+              <a class="pm-frame" href="assets/pmos/screenshots/pmos-admin-grounded.jpg" target="_blank" rel="noopener" title="Open full-size screenshot"><img src="assets/pmos/screenshots/pmos-admin-grounded.jpg" alt="PMOS as an ACME Admin: the same question returns a grounded answer citing the credit-authority runbook." loading="lazy" decoding="async"></a>
+              <figcaption class="pm-cap">
+                <span class="pm-trust-label">ACME · Admin</span>
+                <div class="pm-cap-t">Authorized evidence produces a grounded answer.</div>
+                <div class="pm-cap-d">Switching to an Admin identity exposes the permitted runbook, and the same question returns <strong>&ldquo;Agents may issue credits up to $500 without approval. [1]&rdquo;</strong> — grounded, with its source attached. The question, the index and the endpoint are unchanged.</div>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div>
+          <div class="bld-block-label">02 — Inspectable Evidence</div>
+          <div class="pm-group-t">Evidence is inspectable, not decorative.</div>
+          <div class="pm-group-s">The answer can be traced to the source title, excerpt, citation marker, document and chunk metadata.</div>
+          <div class="pm-shots-single" style="margin-top:0.9rem;">
+            <figure class="pm-fig">
+              <a class="pm-frame evidence" href="assets/pmos/screenshots/pmos-evidence-panel.jpg" target="_blank" rel="noopener" title="Open full-size screenshot"><img src="assets/pmos/screenshots/pmos-evidence-panel.jpg" alt="PMOS evidence panel listing six sources by title, with the selected source showing an excerpt and its document and chunk identifiers." loading="lazy" decoding="async"></a>
+              <figcaption class="pm-cap">
+                <div class="pm-cap-t">Evidence is inspectable, not decorative.</div>
+                <div class="pm-cap-d">Each citation marker resolves to a source the user can read: the document title, the exact excerpt retrieval matched, and the document and chunk identifiers that make the claim traceable. The identifiers are kept visually secondary — they are how an engineer traces a citation, not how a reader recognises a source.</div>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div>
+          <div class="bld-block-label">03 — Tenant Isolation</div>
+          <div class="pm-group-t">Tenant isolation survives retrieval.</div>
+          <div class="pm-group-s">An administrator in GLOBEX cannot retrieve ACME's knowledge.</div>
+          <div class="pm-shots-single" style="margin-top:0.9rem;">
+            <figure class="pm-fig">
+              <a class="pm-frame" href="assets/pmos/screenshots/pmos-tenant-isolation.jpg" target="_blank" rel="noopener" title="Open full-size screenshot"><img src="assets/pmos/screenshots/pmos-tenant-isolation.jpg" alt="PMOS as a GLOBEX Admin: an ACME question returns Not grounded, showing tenant isolation." loading="lazy" decoding="async"></a>
+              <figcaption class="pm-cap">
+                <div class="pm-cap-t">Tenant boundaries survive retrieval.</div>
+                <div class="pm-cap-d">The same identity switched to the GLOBEX tenant — still an Admin — cannot reach ACME's knowledge at all. Role elevation does not cross the tenant boundary, because the boundary is enforced inside retrieval rather than above it.</div>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+      <p class="m-sp" style="margin-top:1.1rem;">Both tenants hold synthetic demo corpora: <strong>12 documents for ACME</strong> and <strong>3 for GLOBEX</strong>, deliberately on unrelated subjects so that isolation shows as a question being genuinely unreachable rather than a tenant simply being empty.</p>
+    </div>
+
+    <div class="m-section">
+      <div class="m-sl">Product Decisions &amp; Tradeoffs</div>
+
+      <div class="pm-dec">
+        <div class="pm-dec-n">Decision 01</div>
+        <div class="pm-dec-t">Permission before generation</div>
+        <div class="pm-dec-w">Generating an answer first and filtering afterwards risks exposing restricted information — and the exposure happens before the filter runs. Authorization is therefore applied during retrieval, so restricted evidence never reaches the generation step at all.</div>
+      </div>
+
+      <div class="pm-dec">
+        <div class="pm-dec-n">Decision 02</div>
+        <div class="pm-dec-t">Abstention over unsupported answers</div>
+        <div class="pm-dec-w">An enterprise assistant needs a safe failure mode. When permitted evidence is missing or inaccessible, PMOS says so explicitly instead of assembling something plausible from whatever ranked highest. The tradeoff is a system that visibly declines more often — which I treat as the correct direction for this use case.</div>
+      </div>
+
+      <div class="pm-dec">
+        <div class="pm-dec-n">Decision 03</div>
+        <div class="pm-dec-t">ACL changes without re-embedding</div>
+        <div class="pm-dec-w">A permission change does not change what a document says. Treating authorization state as separate from content identity means updating who may read a document costs a payload rewrite rather than re-embedding unchanged content — which matters as soon as a corpus is large enough for embedding cost to be real.</div>
+      </div>
+
+      <div class="pm-dec">
+        <div class="pm-dec-n">Decision 04</div>
+        <div class="pm-dec-t">Deterministic embeddings for the demo</div>
+        <div class="pm-dec-w">The current slice exists to validate retrieval, authorization and product behaviour — not embedding quality. A deterministic provider keeps the demo free of external API cost and dependency and makes it reproducible. The tradeoff is explicit: these embeddings carry no semantic signal, so ranking leans on a keyword reranker, and production-grade semantic quality is not something this build has demonstrated.</div>
+      </div>
+
+      <div class="pm-dec">
+        <div class="pm-dec-n">Decision 05</div>
+        <div class="pm-dec-t">Vertical slice over feature breadth</div>
+        <div class="pm-dec-w">A working end-to-end security-aware flow is more useful for validation — and more honest in a portfolio — than a broader collection of disconnected AI features. It also means the gaps are visible rather than hidden behind surface area.</div>
+      </div>
+    </div>
+
+    <div class="m-section">
+      <div class="m-sl">Validation Status</div>
+      <div class="pm-split">
+        <div class="pm-col v">
+          <div class="pm-col-h">Verified Today</div>
+          <ul>
+            <li>Working chat interface</li>
+            <li>Tenant-aware identity resolution</li>
+            <li>Viewer vs. Admin permission behaviour</li>
+            <li>Tenant isolation between ACME and GLOBEX</li>
+            <li>ACL-aware retrieval</li>
+            <li>Grounded answers from permitted evidence</li>
+            <li>Deliberate abstention when evidence is unavailable</li>
+            <li>Inspectable citations and evidence panel</li>
+            <li>Missing tenant identity → HTTP 401</li>
+            <li>Synthetic ACME / GLOBEX demo corpora</li>
+            <li>End-to-end slice exercised through live browser and API testing</li>
+          </ul>
+        </div>
+        <div class="pm-col h">
+          <div class="pm-col-h">Hypothesis — Not Yet Validated</div>
+          <ul>
+            <li>Customer demand</li>
+            <li>ICP definition</li>
+            <li>Buyer identification</li>
+            <li>Pricing</li>
+            <li>ROI</li>
+            <li>Retention</li>
+            <li>Production connector deployment</li>
+            <li>Identity and group synchronization</li>
+            <li>Production semantic embedding quality</li>
+            <li>Commercial willingness to pay</li>
+          </ul>
+        </div>
+      </div>
+      <p class="m-sp" style="margin-top:1.1rem;">There are no customers, no revenue, no interviews and no pricing commitments behind this. Everything in the right-hand column is an assumption I have written down so it can be tested, not a claim.</p>
+    </div>
+
+    <div class="m-section">
+      <div class="m-sl">Business Model — Hypothesis</div>
+      <p class="m-sp">The shape I would test first is a <strong>per-agent SaaS subscription</strong> with a minimum seat commitment — the unit a support leader already budgets in, and the one that scales with the value being delivered rather than with query volume.</p>
+      <div class="pm-calc">
+        <div class="pm-calc-r"><span>20 agents × $50 / agent / month</span><span>$1,000 / month</span></div>
+        <div class="pm-calc-r tot"><span>Annual contract value</span><span>$12,000 / year</span></div>
+        <div class="pm-calc-note">Illustrative arithmetic — not validated pricing</div>
+      </div>
+      <p class="m-sp" style="margin-top:1.1rem;">The value argument I would need to prove: if the system reduces escalations, shortens agent resolution time, or lowers onboarding effort, the subscription can be justified against the operational cost of running support. That is a value <em>hypothesis</em> — I have not measured any of those effects, and the price above is arithmetic, not evidence.</p>
+      <p class="m-sp" style="margin-top:0.9rem;"><strong>Next validation step:</strong> interview support leaders and agents, quantify escalation and search friction against their current baseline, then test willingness to pay.</p>
+    </div>
+
+    <div class="m-section">
+      <div class="m-sl">What I'd Build Next</div>
+      <div class="pm-road">
+        <div class="pm-lane">
+          <div class="pm-p">P0</div>
+          <div>
+            <div class="pm-lane-t">Customer discovery</div>
+            <div class="pm-lane-d">Interview support leaders and agents. Establish which knowledge sources actually matter, and measure escalation and search friction before assuming either. Everything below is unfundable until this returns a signal.</div>
+          </div>
+        </div>
+        <div class="pm-lane">
+          <div class="pm-p">P1</div>
+          <div>
+            <div class="pm-lane-t">Production connector</div>
+            <div class="pm-lane-d">Zendesk or Confluence integration with incremental sync, identity and group synchronization, and real ACL capture from the source system — replacing the demo corpus, whose permissions are declared rather than captured.</div>
+          </div>
+        </div>
+        <div class="pm-lane">
+          <div class="pm-p">P1</div>
+          <div>
+            <div class="pm-lane-t">Conversation history</div>
+            <div class="pm-lane-d">Multi-turn conversations with source continuity across turns, plus a feedback loop so agents can mark where an answer helped or missed.</div>
+          </div>
+        </div>
+        <div class="pm-lane">
+          <div class="pm-p">P2</div>
+          <div>
+            <div class="pm-lane-t">Evaluation harness</div>
+            <div class="pm-lane-d">Measurable grounding, retrieval and abstention quality, plus permission-leakage tests run as a gate. Today those behaviours are verified by direct scenario testing, not scored.</div>
+          </div>
+        </div>
+        <div class="pm-lane">
+          <div class="pm-p">P2</div>
+          <div>
+            <div class="pm-lane-t">Production LLM and semantic embeddings</div>
+            <div class="pm-lane-d">Move off deterministic demo embeddings and the extractive composer once retrieval quality is measurable — so the upgrade can be evaluated rather than assumed.</div>
+          </div>
+        </div>
+      </div>
+      <p class="m-sp" style="margin-top:1.1rem;">These are plans, not capabilities. None of the above exists in the current build.</p>
+    </div>
+
+    <div class="m-section">
+      <div class="m-sl">Closing</div>
+      <div class="pm-close">
+        <p>PMOS is intentionally small today. The product question I wanted to answer first was not &ldquo;Can I build an AI assistant?&rdquo; It was &ldquo;Can I build one that knows what a user is allowed to know, shows its evidence, and fails safely when it cannot?&rdquo;</p>
+        <div class="pm-close-tags">
+          <span class="pm-chip on">Technically Verified</span>
+          <span class="pm-chip">Commercial Validation Next</span>
+        </div>
+      </div>
+    </div>
+
   </div></div>
 </div>
 
